@@ -58,7 +58,7 @@ namespace nada { namespace str {
      * @param neu Einzufügender String an den zu ersetzenden Stellen.
      */
     [[gnu::hot]]
-    static void replace_buffered(std::string& s, const std::string& alt, const std::string& neu) {
+    static void replace(std::string& s, const std::string& alt, const std::string& neu) {
         std::string buffer;
         if (neu.size() > alt.size()) buffer.reserve((size_t)(s.size() * 1.1 + 1));
         else buffer.reserve(s.size());
@@ -81,9 +81,9 @@ namespace nada { namespace str {
      * @param max Wie oft höchstens ersetzt werden soll (-1 heißt ohne Limit).
      */
     [[gnu::hot]]
-    static void replace(std::string& s, const std::string& alt, const std::string& neu, int max = -1) {
+    static void replace(std::string& s, const std::string& alt, const std::string& neu, int max) {
         if (max == -1 && alt.size() != neu.size()) { // optimierte Version nutzen (für ungleich große Ersetzungen)
-            replace_buffered(s, alt, neu); 
+            replace(s, alt, neu); 
             return; 
         } 
         size_t it = 0;
