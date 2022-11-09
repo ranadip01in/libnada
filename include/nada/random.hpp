@@ -41,7 +41,6 @@ namespace nada { namespace random {
     /**
      * Liefert eine Zufallszahl im größtmöglichen Zahlenbereich. Z.B. für zufälliges Hashing.
      * @tparam T Datentyp des Zufallshashes, z.B. uint_32t.
-     * @return
      */
     template<typename T>
     T random_hash() {
