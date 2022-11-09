@@ -16,6 +16,18 @@
 namespace nada {
 class Log final {
 
+    enum Level {
+        LOG_INFO,
+        LOG_DEBUG,
+        LOG_ERROR
+    };
+
+    explicit Log(Level level) : level(level) {}
+
+    const Level level;
+
+    static inline std::ostream* out_stream = &std::cout;
+
 public:
 
     /// Hilfselement zum flushen.
@@ -68,41 +80,51 @@ public:
         funktion();
         const auto ende = std::chrono::system_clock::now();
         const std::chrono::duration<double> dauer = ende - start;
-        std::cout << text << " Dauer: " << dauer.count() << "s\n";
+        *out_stream << text << " Dauer: " << dauer.count() << "s\n";
     }
+
+    /**
+     * 
+     **/
+    static void set_output(std::ostream* stream) { out_stream = stream; }
+
+    /**
+     * 
+     */
+    static void to_cout() { out_stream = &std::cout; }
 
     /// Flush.
     const Log& operator<<(const Flush& f) const noexcept {
         (void) f;
         switch (level) {
             case LOG_INFO:
-                std::cout << std::flush;
+                *out_stream << std::flush;
                 break;
             case LOG_ERROR:
-                std::cerr << std::flush;
+                *out_stream << std::flush;
                 break;
             case LOG_DEBUG:
                 #ifndef NDEBUG
-                std::cout << std::flush;
+                *out_stream << std::flush;
                 #endif
                 break;
         }
         return *this;
     }
 
-    /// Flush.
+    /// Newline + Flush.
     const Log& operator<<(const Endl& e) const noexcept {
         (void) e;
         switch (level) {
             case LOG_INFO:
-                std::cout << std::endl;
+                *out_stream << std::endl;
                 break;
             case LOG_ERROR:
-                std::cerr << std::endl;
+                *out_stream << std::endl;
                 break;
             case LOG_DEBUG:
                 #ifndef NDEBUG
-                std::cout << std::endl;
+                *out_stream << std::endl;
                 #endif
                 break;
         }
@@ -114,31 +136,19 @@ public:
     const Log& operator<<(const T& item) const noexcept {
         switch (level) {
             case LOG_INFO:
-                std::cout << item;
+                *out_stream << item;
                 break;
             case LOG_ERROR:
-                std::cerr << item;
+                *out_stream << item;
                 break;
             case LOG_DEBUG:
                 #ifndef NDEBUG
-                std::cout << item;
+                *out_stream << item;
                 #endif
                 break;
         }
         return *this;
     }
-
-private:
-
-    enum Level {
-        LOG_INFO,
-        LOG_DEBUG,
-        LOG_ERROR
-    };
-
-    explicit Log(Level level) : level(level) {}
-
-    const Level level;
 
 };
 }

@@ -8,7 +8,7 @@ Simplistic C++ helper library for every day needs like
 
 # How to include in your project
 1. Git clone or copy folder `libnada` to the same directory your `CMakeLists.txt` is in.
-2. Add these lines to your `CMakeLists.txt`
+2. Add these 3 lines to your `CMakeLists.txt`
 ```cmake
     ...
     add_subdirectory(libnada)

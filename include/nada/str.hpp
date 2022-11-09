@@ -5,7 +5,6 @@
 
 namespace nada { namespace str {
 
-
     /**
      * @brief Spaltet einen String `text` in Teile auf. Zerhackt wird dort, wo `char token_sep` auftritt.
      * 
