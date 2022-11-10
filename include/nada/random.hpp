@@ -7,7 +7,7 @@
 #include <unordered_map>
 
 /// Methoden zum Liefern von Zufallszahlen.
-namespace nada { namespace random {
+namespace nada::random {
 
     /// Liefert eine Zufallszahl (ganzzahlig) im Bereich a <= N <= b (Template-Version).
     template<typename T, std::enable_if_t<std::is_integral<T>::value, int> = 0>
@@ -110,4 +110,4 @@ namespace nada { namespace random {
         return v;
     }
 
-}}
+}

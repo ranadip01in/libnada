@@ -3,7 +3,7 @@
 #include <doctest.h>
 #include <nada/random.hpp>
 
-class Test_ramdom { TEST_CASE_CLASS("Test_random") {
+class Test_random { TEST_CASE_CLASS("Test_random") {
 
     SUBCASE("100%") {
         std::vector<bool> bools;

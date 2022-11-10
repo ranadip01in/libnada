@@ -16,10 +16,10 @@ struct Do_Once {
 #define NADA_DO_ONCE if (static Do_Once once_var; once_var)
 
 /// Helfermethoden, die sonst in keine Kategorie passen.
-namespace nada { namespace misc {
+namespace nada::misc {
 
     /// Liest eine Datei mit gegebenem Pfad ein und fügt jede Zeile in einen Container via `push_back` hinzu.
-    void zeilen_lesen(const std::string& pfad, std::vector<std::string>& liste, const uint8_t min_laenge = 2);
+    void zeilen_lesen(const std::string& pfad, std::vector<std::string>& liste, uint8_t min_laenge = 2);
 
     /// Sowas wie `System.currentTimeMillis()` aus Java.
     unsigned long long millis();
@@ -37,11 +37,8 @@ namespace nada { namespace misc {
      */
     std::vector<std::string> alle_dateien(const std::string& ordner, std::string endung);
 
-    /// Entfernt aus gegebenen String alle Leerzeichen.
-    void remove_whitespace(std::string& s);
-
     /// Vergleicht via < die Objekte, die sich hinter ihren Zeigern verbergen.
     template <typename T>
     bool ptr_compare(const T* o1, const T* o2) { return *o1 < *o2; }
 
-}}
+}

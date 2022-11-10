@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <future>
 
-namespace nada { namespace str {
+namespace nada::str {
 
     /**
      * @brief Spaltet einen String `text` in Teile auf. Zerhackt wird dort, wo `char token_sep` auftritt.
@@ -13,7 +13,7 @@ namespace nada { namespace str {
      * @return std::vector<std::string> Die aufgespaltenden Teile. 
      * @note Nach Aufspaltung enthält keines der Teile mehr den `char token_sep`.
      */
-    std::vector<std::string> tokenize(const std::string& text, const char token_sep);
+    std::vector<std::string> tokenize(const std::string& text, char token_sep);
 
     /**
      * @brief Eine einfache `replace_all`-Methode zum Ersetzen von `char`.
@@ -99,8 +99,9 @@ namespace nada { namespace str {
      */
     size_t find_after(const std::string& s, const std::string& f, const std::string& a);
     
-    void remove(std::string& str, const char c);
+    void remove(std::string& str, char c);
 
+    /// Entfernt aus gegebenen String alle Leerzeichen.
     void remove_whitespace(std::string& s);
 
-}}
+}
