@@ -4,8 +4,16 @@
 + string manipulation
 + random number generation
 + ini (config) file reading/writing
-+ basic logging
++ simplistic logging
 + file system
+
+**Documented**
++ Usage examples see below
++ All functions are documented in their headers
+
+**Unit Tested**
++ in `./test/` using the awesome [doctest header-only library](https://github.com/doctest/doctest/)
++ tests also provide more usage examples
 
 ## How to include in your project
 1. Git clone or copy folder `libnada` to the same directory your `CMakeLists.txt` is in.
@@ -87,4 +95,14 @@ if (ini.good()) {
 
 ### For miscellaneous things 
 ### `#include <nada/misc.hpp>`
-TODO
+
+```cpp
+// if you have a folder structure like this
+// .
+// └── subfolder
+//     ├── file1.xml
+//     ├── file2.jpg
+//     ├── file3.png
+//     └── file4.jpg
+std::vector<std::string> files = nada::misc::all_files("subfolder", "jpg"); // ["file2.jpg", "file4,jpg"]
+```
