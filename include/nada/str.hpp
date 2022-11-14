@@ -6,102 +6,108 @@
 namespace nada::str {
 
     /**
-     * @brief Spaltet einen String `text` in Teile auf. Zerhackt wird dort, wo `char token_sep` auftritt.
-     * 
-     * @param text Aufzuspaltender Text.
-     * @param token_sep Tritt dieser `char` auf, wird an dieser Stelle ein neues Token begonnen.
-     * @return std::vector<std::string> Die aufgespaltenden Teile. 
-     * @note Nach Aufspaltung enthält keines der Teile mehr den `char token_sep`.
+     * @brief Splits a string 'text' into parts. Chopping is done where 'char token_sep' occurs.
+     *
+     * @param text Text to split.
+     * @param token_sep If this `char` occurs, a new token is started at this point.
+     * @return std::vector<std::string> The splitting parts.
+     * @note After splitting, none of the parts contains the `char token_sep` anymore.
      */
     std::vector<std::string> tokenize(const std::string& text, char token_sep);
 
     /**
-     * @brief Eine einfache `replace_all`-Methode zum Ersetzen von `char`.
-     * Ersetzt alle Vorkomnisse von `alt` in einem String `s` durch `neu`.
-     * @param s Zu manipulierender Gesamtstring.
-     * @param alt Zu ersetzender `char`.
-     * @param neu Einzufügender `char` an den zu ersetzenden Stellen.
-     * @note Nutzt 2 Threads bei Strings größer als 1 Mio chars.
+     * @brief A simple 'replace_all' method to replace 'char'.
+     * Replaces all occurrences of `old` in a string `s` with `new'.
+     * @param s The string to manipulate.
+     * @param old `char` to replace.
+     * @param new `char` to replace with.
+     * @note Uses 2 threads for strings larger than 1 million chars.
      */
-    void replace(std::string& s, char alt, char neu);
+    void replace(std::string& s, char c_old, char c_new);
 
     /**
-     * @brief Eine für große Strings optimierte `replace_all`-Methode.
-     * Ersetzt alle Vorkomnisse von `alt` in einem String `s` durch `neu`.
-     * Bei großen Strings und Ersetzung mit `alt.size() != neu.size()` schneller als
-     * die reguläre Replace-Methode: @see replace.
-     * @param s Zu manipulierender Gesamtstring.
-     * @param alt Zu ersetzender Teilstring.
-     * @param neu Einzufügender String an den zu ersetzenden Stellen.
+     * @brief A `replace_all` method optimized for large strings.
+     * Replaces all occurrences of `old` in a string `s` with `new'.
+     * For large strings, and replace with 'alt.size() != new.size()` faster than
+     * the regular replace method: @see replace.
+     * @param s The string to manipulate.
+     * @param old `char` to replace.
+     * @param new `char` to replace with.
      */
-    void replace(std::string& s, const std::string& alt, const std::string& neu);
+    void replace(std::string& s, const std::string& s_old, const std::string& s_new);
 
     /**
-     * @brief Eine `replace_all`-Methode mit Abbruchfunktion.
-     * Ersetzt alle Vorkomnisse von `alt` in einem String `s` durch `neu`.
-     * @param s Zu manipulierender Gesamtstring.
-     * @param alt Zu ersetzender Teilstring.
-     * @param neu Einzufügender String an den zu ersetzenden Stellen.
-     * @param max Wie oft höchstens ersetzt werden soll (-1 heißt ohne Limit).
+     * @brief A 'replace_all' method with a cancel function.
+     * Replaces all occurrences of `old` in a string `s` with `new'.
+     * @param s The string to manipulate.
+     * @param old `char` to replace.
+     * @param new `char` to replace with.
+     * @param max Maximum number of times to replace (-1 means no limit).
      */
-    void replace(std::string& s, const std::string& alt, const std::string& neu, int max);
+    void replace(std::string& s, const std::string& s_old, const std::string& s_new, int max);
 
     /**
-     * @brief Liefert den Text, der sich zwischen zwei bestimmten Teilstrings befindet.
+     * @brief Returns the text between two tokens.
      *
-     * @param zeile Zu undersuchender Text.
-     * @param l_sep 'Linker' Anfang des zu extrahierenden Textausschnitts als `char` oder `std::string`.
-     * @param r_sep 'Rechtes' Ende des zu extrahierenden Textausschnitts als `char` oder `std::string`.
-     * @return std::string Der extrahierte Textausschnitt. Leer, falls Teilstrings nicht gefunden.
-     * @note Der Textausschnitt wird ohne `l_sep` und `r_sep` wiedergegeben.
+     * @param text Text to search.
+     * @param l_sep 'l_set' Left separator of the text snippet to be extracted. Can be `char` or `std::string`.
+     * @param r_sep 'r_set' Right separator of the text snippet to be extracted. Can be `char` or `std::string`.
+     * @return std::string The extracted text snippet. Empty if the separators are not found.
+     * @note The text snippet is rendered without `l_sep` and `r_sep`.
      */
     template <typename T, typename U>
-    static std::string get_between(std::string zeile, const T& l_sep, const U& r_sep) {
-        auto links = zeile.find(l_sep);
+    static std::string get_between(std::string text, const T& l_sep, const U& r_sep) {
+        auto links = text.find(l_sep);
         if (links != std::string::npos) {
             ++links;
-            const auto rechts = zeile.find(r_sep, links);
-            if (rechts != std::string::npos && links < rechts) return {zeile.begin() + links, zeile.begin() + rechts};
-            else                                               return {zeile.begin() + links, zeile.end()};
+            const auto rechts = text.find(r_sep, links);
+            if (rechts != std::string::npos && links < rechts) return {text.begin() + links, text.begin() + rechts};
+            else                                               return {text.begin() + links, text.end()};
         }
         return {};
     }
 
     /**
-     * @brief Wandelt einen ANSI-String in nur Kleinbuchstaben um.
-     * @param s Zu manipulierender String. 
-     * @note Umlaute und Sonderzeichen könnten Probleme machen. (Nur ANSI/ASCII wird garantiert korrekt umgewandelt.)
+     * @brief Converts an ANSI string to lowercase only.
+     * @params The string to manipulate.
+     * @note umlauts and special characters could cause problems. (Only ANSI/ASCII is converted correctly.)
      */
     void to_lower(std::string& s);
 
     /**
-     * @brief Findet die Position des n. Vorkommens von `f` in `s` (Index beginnt mit 0).
-     * Werden beispielsweise die Parameter ("aaaa,bbbb,cccc,dddd,eeee", ",", 2) übergeben,
-     * wird 14 zurückgegeben, also die Position des des 3. Kommatas (vgl. `std::string::find`).
+     * Finds index of the nth occurence of `f` in `s` (indexing starts with 0). 
+     * Returns `std::string::npos` if not found.
+     * @see `test_string.hpp` for examples.
      * 
-     * @param s Zu durchsuchender String.
-     * @param f Zu suchendes Token.
-     * @param n Index des Vorkommens.
-     * @param start_pos Anfangsposition für die Suche (optional).
-     * @return size_t 0-indizierte Position des gefundenen Tokens, vgl. `std::string::find`.
+     * @param s String to search.
+     * @param f Token to find.
+     * @param n Return the index of nth Token.
+     * @param start_pos Position to start the search, 0 by default.
+     * @return size_t 0-indexed position of s. Same as `std::string::find` does.
      */
     size_t find(const std::string& s, const std::string& f, unsigned n, size_t start_pos = 0);
 
     /**
-     * @brief Findet die Position von String f in String s, jedoch erst nach Vorkommen von String a (in s).
-     * Werden beispielsweise die Parameter ("hallo welt und hallo computer", "hallo", "und") übergeben,
-     * wird die Position des zweiten "hallo", nämlich das nach dem "und" vorkommt, zurückgegeben.
+     * @brief Finds the position of String f in String s, but only after the occurrence of String a (in s of course).
+     * For example, the parameters ("hello world and hello computer", "hello", "and") are passed,
+     * the position of the second "hello", which occurs after the "and", is returned.
+     * Position indices returned work the same as `std::string::find`.
      * 
-     * @param s Zu durchsuchender String.
-     * @param f Zusuchender Token (hinter a).
-     * @param a Erst ab Vorkommen dieses Tokens in s wird f gesucht.
-     * @return size_t Position von f in s hinter a. `std::string::npos`, wenn nicht gefunden.
+     * @param s String to search.
+     * @param f Token to find (after first occurence of a).
+     * @param a Searches s only after finding this `a`.
+     * @return size_t Position of f in s after a. `std::string::npos` if not found.
      */
     size_t find_after(const std::string& s, const std::string& f, const std::string& a);
     
+    /**
+     *  @brief Removes all characters `c` from str.
+     * @param str String to manipulate.
+     * @param c Charater to remove.
+     */
     void remove(std::string& str, char c);
 
-    /// Entfernt aus gegebenen String alle Leerzeichen.
+    /// Removes all whitespace from `s`.
     void remove_whitespace(std::string& s);
 
 }

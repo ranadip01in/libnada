@@ -43,7 +43,7 @@ void nada::str::replace(std::string& s, const std::string& alt, const std::strin
 
 [[gnu::hot]]
 void nada::str::replace(std::string& s, const std::string& alt, const std::string& neu, int max) {
-    if (max == -1 && alt.size() != neu.size()) { // optimierte Version nutzen (für ungleich große Ersetzungen)
+    if (max < 0 && alt.size() != neu.size()) { // optimierte Version nutzen (für ungleich große Ersetzungen)
         nada::str::replace(s, alt, neu); 
         return; 
     } 

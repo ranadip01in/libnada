@@ -19,7 +19,7 @@ void nada::misc::zeilen_lesen(const std::string& pfad, std::vector<std::string>&
     //else nada::Log::err() << pfad << " konnte nicht gelesen werden.\n"; //TODO
 }
 
-uint32_t nada::misc::get_farbe_nach_verhaeltnis(unsigned int zaehler, unsigned int nenner) {
+uint32_t nada::misc::get_color_from_ratio(unsigned int zaehler, unsigned int nenner) {
     const float verhaeltnis = static_cast<float>(zaehler) / static_cast<float>(nenner);
     const uint8_t g = std::min(0xFF, static_cast<int>(0xFF * verhaeltnis));
     const uint8_t r = 0xFF - g;
@@ -30,7 +30,7 @@ uint32_t nada::misc::get_farbe_nach_verhaeltnis(unsigned int zaehler, unsigned i
     return f;
 }
 
-std::vector<std::string> nada::misc::alle_dateien(const std::string& ordner, std::string endung) {
+std::vector<std::string> nada::misc::all_files(const std::string& ordner, std::string endung) {
     std::vector<std::string> dateien;
     endung = "." + endung;
     for (const auto& entry : std::filesystem::directory_iterator(ordner)) {

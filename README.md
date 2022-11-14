@@ -1,12 +1,13 @@
 # nadalib
-Simplistic C++ helper library for every day needs like
+
+## *User friendly C++ library for everyday basic needs*
++ string manipulation
 + random number generation
 + ini (config) file reading/writing
 + basic logging
-+ string manipulation
 + file system
 
-# How to include in your project
+## How to include in your project
 1. Git clone or copy folder `libnada` to the same directory your `CMakeLists.txt` is in.
 2. Add these 3 lines to your `CMakeLists.txt`
 ```cmake
@@ -18,5 +19,5 @@ Simplistic C++ helper library for every day needs like
     target_link_libraries(PROJECT_NAME PRIVATE nada)
     ...
 ```
-# How to Use
+## How to Use
 TODO

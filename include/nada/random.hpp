@@ -6,41 +6,41 @@
 #include <chrono>
 #include <unordered_map>
 
-/// Methoden zum Liefern von Zufallszahlen.
+/// Methods for supplying random numbers.
 namespace nada::random {
 
-    /// Liefert eine Zufallszahl (ganzzahlig) im Bereich a <= N <= b (Template-Version).
+    /// Returns a random number (integer) in the range a <= N <= b (template version).
     template<typename T, std::enable_if_t<std::is_integral<T>::value, int> = 0>
     T get(T a, T b);
 
-    /// Liefert eine Zufallszahl (Gleitkomma) im Bereich a <= N <= b (Template-Version).
+    /// Returns a random number (float) in the range a <= N <= b (template version).
     template<typename T, std::enable_if_t<std::is_floating_point<T>::value, int> = 0>
     T get(T a, T b);
 
-    /// Liefert eine Zufallszahl im Bereich a <= N <= b (unsigned int).
+    /// Returns a random number in the range a <= N <= b (unsigned int).
     int i(int a, int b);
 
-    /// Liefert eine Zufallszahl im Bereich a <= N <= b (long long int).
+    /// Returns a random number in the range a <= N <= b (long long int).
     long long ll(long long a, long long b);
 
-    /// Liefert eine Zufallszahl im Bereich a <= N <= b (unsigned int).
+    /// Returns a random number in the range a <= N <= b (unsigned int).
     unsigned int ui(unsigned int a, unsigned int b);
 
-    /// Liefert eine Zufallszahl im Bereich a <= N <= b (unsigned long).
+    /// Returns a random number in the range a <= N <= b (unsigned long).
     unsigned long ul(unsigned long a, unsigned long b);
 
-    /// Liefert eine Zufallszahl im Bereich a <= N < b (float).
+    /// Returns a random number in the range a <= N <= b (float).
     float f(float a, float b);
 
-    /// Liefert eine Zufallszahl im Bereich a <= N < b (double).
+    /// Returns a random number in the range a <= N <= b (double).
     double d(double a, double b);
 
-    /// Gibt mit einer Wahrscheinlichkeit von `chance`% `true` zurück.
+    /// Returns `true` with a probability of `chance`%. 0 returns always `false`; 100 or more returns always `true`.
     bool b(unsigned int chance);
 
     /**
-     * Liefert eine Zufallszahl im größtmöglichen Zahlenbereich. Z.B. für zufälliges Hashing.
-     * @tparam T Datentyp des Zufallshashes, z.B. uint_32t.
+    * Returns a random number in the largest possible number range. For example, for random hashing.
+    * @tparam T Data type of the random hash, e.g. uint_32t.
      */
     template<typename T>
     T random_hash() {
@@ -51,59 +51,59 @@ namespace nada::random {
     }
 
     /**
-     * @brief Liefert ein Zufälliges Element gegebener Liste. Const-Version.
-     * @tparam T Datentyp der Elemente in der Liste.
-     * @param liste Nicht-leere Liste mit Elementen, aus denen zufällig eines ausgewählt werden soll.
-     * @warning Liste darf nicht leer sein!
+     * @brief Returns a random element of a given list. Const version.
+     * @tparam T data type of the items in the list.
+     * @param list Non-empty list of items to randomly select one from.
+     * @warning list must not be empty!
      */
     template<typename T>
-    const typename T::value_type& wahl(const T& liste) {
-        std::size_t n = nada::random::get<std::size_t>(0, liste.size() - 1);
-        auto iter = std::cbegin(liste);
+    const typename T::value_type& choice(const T& list) {
+        std::size_t n = nada::random::get<std::size_t>(0, list.size() - 1);
+        auto iter = std::cbegin(list);
         std::advance(iter, n);
         return *iter;
     }
 
     /**
-     * @brief Liefert ein Zufälliges Element gegebener Liste. Nicht-const Version.
-     * @tparam T Datentyp der Elemente in der Liste.
-     * @param liste Nicht-leere Liste mit Elementen, aus denen zufällig eines ausgewählt werden soll.
-     * @warning Liste darf nicht leer sein!
+     * @brief Returns a random element of a given list. Non-const version.
+     * @tparam T data type of the items in the list.
+     * @param list Non-empty list of items to randomly select one from.
+     * @warning list must not be empty!
      */
     template<typename T>
-    typename T::value_type& wahl(T& liste) {
-        std::size_t n = nada::random::get<std::size_t>(0, liste.size() - 1);
-        auto iter = std::begin(liste);
+    typename T::value_type& choice(T& list) {
+        std::size_t n = nada::random::get<std::size_t>(0, list.size() - 1);
+        auto iter = std::begin(list);
         std::advance(iter, n);
         return *iter;
     }
 
     /**
-     * @brief Liefert ein Zufälliges Element gegebener Liste und entfernt dieses.
-     * @note Liste darf nicht leer sein.
-     * @note Objekt wird via Zuweisung kopiert und zurückgegeben.
+     * @brief Returns a random element of a given list and removes it.
+     * @note list must not be empty.
+     * @note object is copied and returned via assignment.
      */
     template<typename T>
-    typename T::value_type wahl_erase(T& liste) {
+    typename T::value_type choice_erase(T& liste) {
         std::size_t n = nada::random::get<std::size_t>(0, liste.size() - 1);
         auto iter = std::begin(liste);
         std::advance(iter, n);
-        typename T::value_type objekt = *iter; // Kopie
+        typename T::value_type objekt{std::move(*iter)}; // Kopie
         liste.erase(iter);
         return objekt;
     }
 
     /**
-     * Liefert einen Vektor aus Objekten.
-     * Jedes Objekt kommt "paar<A,B>.second" mal vor.
-     * Beispielsweise zum Erstellen von Loslisten.
-     * @tparam A Key-Typ der Map und gleichzeitig value_type des zurückgegebenen Vektors.
-     * @tparam B Datentyp, der die Anzahl der Objekte B bestimmt, die in den Rückgabevektor geschrieben werden.
-     * @param gewichtungen Zu verarbeitende Map von Gewichtungen.
-     * @return Erzeugte Liste von A.
+     * Returns a vector of objects.
+     * Each object appears `pair<A,B>.second` times.
+     * This is used for example to create lot lists.
+     * @tparam A key_type of the map and at the same time value_type of the returned vector.
+     * @tparam B Integer data type that determines the number of objects B that will be written to the return vector.
+     * @param weights A map of weights to be processed.
+     * @return Generated list of A.
      */
     template<typename A, typename B>
-    constexpr std::vector<A> get_gewichtungen(const std::unordered_map<A, B>& gewichtungen) {
+    constexpr std::vector<A> get_weights(const std::unordered_map<A, B>& gewichtungen) {
         std::vector<A> v;
         v.reserve(gewichtungen.size() * 2);
         for (const auto& paar: gewichtungen) for (unsigned int i = 0; i < paar.second; ++i) v.push_back(paar.first);
