@@ -20,7 +20,7 @@ struct Do_Once {
 namespace nada::misc {
 
     /// Reads a file with a given path and adds each line to a container via 'push_back'.
-    void zeilen_lesen(const std::string& pfad, std::vector<std::string>& liste, uint8_t min_laenge = 2);
+    void read_lines(const std::string& pfad, std::vector<std::string>& liste, unsigned min_laenge = 2);
 
     /** 
      * Gives you the amount of milliseconds from a fixed point in time. 

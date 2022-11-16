@@ -5,7 +5,7 @@
 #include <filesystem>
 #include <unordered_map>
 
-void nada::misc::zeilen_lesen(const std::string& pfad, std::vector<std::string>& liste, uint8_t min_laenge) {
+void nada::misc::read_lines(const std::string& pfad, std::vector<std::string>& liste, unsigned min_laenge) {
     std::ifstream in(pfad, std::ios::binary);
     if (in.good()) {
         for (std::string zeile; std::getline(in, zeile);) {
