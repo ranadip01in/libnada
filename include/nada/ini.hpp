@@ -66,7 +66,18 @@ public:
         return std::atof(val.c_str());
     }
 
-private:
+    /**
+     * Returns the values separated by `token` from an INI file (with = as separator)
+     * for a given key as 'std::vector<std::string>`.
+     *
+     * @param key The key in the INI from which the values are read.
+     * @param token delimiter of the value list.
+     * @param append If `append` is given, this value is appended to all strings.
+     * @return List of the read values as a string.
+     */
+    std::vector<std::string> get_value_as_vector_from_file(const std::string& key, char token, const std::string& append = "") {
+        return get_value_as_vector_from_file(this->ini_file, key, token, append);
+    }
 
     /**
     * Returns the value of the given key from an INI file (with = as separator).
@@ -90,6 +101,8 @@ private:
     * @return List of the read values as a string.
     */
     static std::vector<std::string> get_value_as_vector_from_file(const std::string& datei, const std::string& key, const char token, const std::string& append = "");
+
+private:
 
     /// @brief Path to ini file.
     std::string ini_file;
