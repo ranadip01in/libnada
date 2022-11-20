@@ -34,11 +34,9 @@ std::vector<std::string> nada::misc::all_files(const std::string& ordner, std::s
     std::vector<std::string> dateien;
     endung = "." + endung;
     for (const auto& entry : std::filesystem::directory_iterator(ordner)) {
-        if (entry.is_regular_file()) if (const auto& dateiname = entry.path().string();
-                dateiname.find(endung) != std::string::npos &&
-                dateiname.substr(dateiname.find(endung)).size() == endung.size() + 1)
-        {
-            dateien.push_back(dateiname);
+        if (entry.is_regular_file()) {
+            const auto& dateiname = entry.path().generic_string();
+            if (endung == "." || nada::str::ends_with(dateiname, endung)) dateien.push_back(dateiname);
         }
     }
     return dateien;

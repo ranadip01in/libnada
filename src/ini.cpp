@@ -26,3 +26,10 @@ nada::Ini::get_value_as_vector_from_file(const std::string& datei, const std::st
     if (!append.empty()) for (auto& t : tokens) t.append(append);
     return tokens;
 }
+
+bool nada::Ini::get_bool(const std::string& key, bool fallback) {
+    std::string val = get(key);
+    if (val.empty()) return fallback;
+    nada::str::to_lower(val);
+    return val.find('1') != std::string::npos || val.find("true") != std::string::npos;
+}

@@ -7,7 +7,7 @@ set(LIBNADA_INCLUDE_DIRS ${LIBNADA_INCLUDE_DIRS} PARENT_SCOPE)
 file(GLOB_RECURSE CPP_FILES src/*.cpp)
 
 # libnada
-add_library(nada SHARED ${CPP_FILES})
+add_library(nada STATIC ${CPP_FILES})
 target_include_directories(nada PRIVATE ${LIBNADA_INCLUDE_DIRS})
 
 # libnada - tests

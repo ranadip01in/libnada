@@ -43,6 +43,14 @@ public:
     }
 
     /**
+     * Gives you a bool behind given key.
+     * Bools may be presented as `0` or `1`, `false` or `true`, `False` or `True` and `FALSE` or `TRUE`.
+     * @param key The key in the INI from which the values are read.
+     * @param fallback If `key` wasn't found, this value is returned.
+     */
+    bool get_bool(const std::string& key, bool fallback);
+
+    /**
      * Use this to retrieve integers, longs, long longs or anything unsigned.
      * @example `long value = ini.get_int<long>("key", 42);`
      * @param fallback If `key` wasn't found, this is returned.

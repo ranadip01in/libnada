@@ -77,3 +77,13 @@ void nada::str::remove(std::string& str, const char c) {
 void nada::str::remove_whitespace(std::string& s) {
     s.erase(std::remove_if(s.begin(), s.end(), [](unsigned char c) { return std::isspace(c); }), s.end());
 }
+
+bool nada::str::begins_with(const std::string& s, const std::string& beginning) {
+    if (beginning.size() > s.size()) return false;
+    return s.compare(0, beginning.size(), beginning) == 0;
+}
+
+bool nada::str::ends_with(const std::string& s, const std::string& ending) {
+    if (ending.size() > s.size()) return false;
+    return std::equal(ending.rbegin(), ending.rend(), s.rbegin());
+}

@@ -7,6 +7,8 @@ template double nada::random::get<double>(double a, double b);
 template long double nada::random::get<long double>(long double a, long double b);
 template char nada::random::get<char>(char a, char b);
 template unsigned char nada::random::get<unsigned char>(unsigned char a, unsigned char b);
+template short nada::random::get<short>(short a, short b);
+template unsigned short nada::random::get<unsigned short>(unsigned short a, unsigned short b);
 template int nada::random::get<int>(int a, int b);
 template unsigned nada::random::get<unsigned>(unsigned a, unsigned b);
 template long nada::random::get<long>(long a, long b);

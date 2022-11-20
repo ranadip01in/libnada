@@ -99,7 +99,23 @@ namespace nada::str {
      * @return size_t Position of f in s after a. `std::string::npos` if not found.
      */
     size_t find_after(const std::string& s, const std::string& f, const std::string& a);
-    
+
+    /**
+     * Check if a string starts with a given string.
+     * @param s String to check.
+     * @param beginning Check if `s` begins with this.
+     * @return Does `s` begin with `beginning`?
+     */
+    bool begins_with(const std::string& s, const std::string& beginning);
+
+    /**
+     * Check if a string ends with a given string.
+     * @param s String to check.
+     * @param ending Check if `s` ends with this.
+     * @return Does `s` end with `ending`?
+     */
+    bool ends_with(const std::string& s, const std::string& ending);
+
     /**
      *  @brief Removes all characters `c` from str.
      * @param str String to manipulate.
