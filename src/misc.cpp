@@ -13,8 +13,3 @@ uint32_t nada::misc::get_color_from_ratio(unsigned int zaehler, unsigned int nen
     std::move(&arr[0], &arr[4], p);
     return f;
 }
-
-unsigned long long nada::misc::millis() {
-    auto millis = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
-    return millis.count();
-}

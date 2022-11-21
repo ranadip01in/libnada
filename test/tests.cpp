@@ -5,6 +5,7 @@
 #include "test_ini.hpp"
 #include "test_log.hpp"
 #include "test_misc.hpp"
+#include "test_time.hpp"
 #include "test_random.hpp"
 #include "test_str.hpp"
 

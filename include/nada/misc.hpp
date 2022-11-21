@@ -41,12 +41,6 @@ struct Do_Once {
 /// Helpers, that don't fit anywhere else.
 namespace nada::misc {
 
-    /** 
-     * Gives you the amount of milliseconds from a fixed point in time. 
-     * Does roughly the same as you'd expect from Java's `System.currentTimeMillis()`.
-     */
-    unsigned long long millis();
-
     /**
      * Provides a color (rgb 32 bit) with a green tint at a positive ratio > 1, red tint at < 1.
      * 0 = maximum red; 1 = maximum green.

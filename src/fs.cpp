@@ -29,3 +29,15 @@ std::vector<std::string> nada::fs::all_files(const std::string& ordner, std::str
     }
     return dateien;
 }
+
+std::vector<std::string> nada::fs::all_files_recursive(const std::string& folder, std::string extension) {
+    std::vector<std::string> dateien;
+    extension = "." + extension;
+    for (const auto& entry : std::filesystem::recursive_directory_iterator(folder)) {
+        if (entry.is_regular_file()) {
+            const auto& dateiname = entry.path().generic_string();
+            if (extension == "." || nada::str::ends_with(dateiname, extension)) dateien.push_back(dateiname);
+        }
+    }
+    return dateien;
+}

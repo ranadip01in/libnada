@@ -1,6 +1,7 @@
 # nadalib
 
 ## User friendly C++ library for everyday basic needs
+**C++17 or later required**
 + string manipulation
 + random number generation
 + ini (config) file reading/writing
@@ -95,14 +96,39 @@ if (ini.good()) {
 
 ### For miscellaneous things 
 ### `#include <nada/misc.hpp>`
+```cpp
+// sleep + a simple millis() clock
+unsigned long long m1 = nada::time::millis(); // 1669025747307
+nada::time::sleep(100); // sleeps 100 ms
+unsigned long long m1 = nada::time::millis(); // 1669025747407
+
+// Sum elements using multi-threading if available
+std::vector<unsigned> v = { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+unsigned sum = NADA_SUM(v, std::plus()); // sum == 10
+```
+
+### For filesystem stuff
+### `#include <nada/fs.hpp>`
 
 ```cpp
-// if you have a folder structure like this
+// if you got a folder structure like this for example
 // .
 // └── subfolder
 //     ├── file1.xml
 //     ├── file2.jpg
 //     ├── file3.png
-//     └── file4.jpg
-std::vector<std::string> files = nada::misc::all_files("subfolder", "jpg"); // ["file2.jpg", "file4,jpg"]
+//     ├── file4.jpg
+//     └── subsubfolder
+//         ├── file5.txt
+//         └── file6.xml
+
+std::vector<std::string> files = nada::fs::all_files("subfolder"); 
+// => subfolder/file1.xml, subfolder/file2.jpg, subfolder/file3.png subfolder/file4.jpg
+
+std::vector<std::string> files = nada::fs::all_files("subfolder", "jpg"); 
+// => subfolder/file2.jpg, subfolder/file4.jpg
+
+std::vector<std::string> files = nada::fs::all_files_recursive("subfolder", "xml"); 
+// => subfolder/file1.xml, subfolder/subsubfolder/file6.xml
+
 ```
