@@ -8,6 +8,28 @@
 #include <algorithm>
 #include <utility>
 
+#if __has_include(<execution>)
+    /**
+     * Sums Elements in `c` beginning with 0.
+     * Automatically chooses single-threaded execution where `<execution>` is
+     * unavailable.
+     * @param c Range to sum. Could be std::vector for example.
+     * @param f A binary function object as in `std::accumulate` or `std::reduce`.
+     */
+    #include <execution>
+    #define NADA_SUM(c, f) std::reduce(std::execution::par, c.begin(), c.end(), 0, f);
+#else
+    /**
+     * Sums Elements in `c` beginning with 0.
+     * Automatically chooses single-threaded execution where `<execution>` is
+     * unavailable.
+     * @param c Range to sum. Could be std::vector for example.
+     * @param f A binary function object as in `std::accumulate` or `std::reduce`.
+     */
+    #include <algorithm>
+    #define NADA_SUM(c, f) std::accumulate(c.begin(), c.end(), 0, f);
+#endif
+
 /// Use this like: `if (static Do_Once _; _)` and the following code is only executed once or use the `NADA_DO_ONCE` macro.
 struct Do_Once {
     explicit operator bool() { return std::exchange(b, false); }
