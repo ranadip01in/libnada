@@ -41,9 +41,6 @@ struct Do_Once {
 /// Helpers, that don't fit anywhere else.
 namespace nada::misc {
 
-    /// Reads a file with a given path and adds each line to a container via 'push_back'.
-    void read_lines(const std::string& pfad, std::vector<std::string>& liste, unsigned min_laenge = 2);
-
     /** 
      * Gives you the amount of milliseconds from a fixed point in time. 
      * Does roughly the same as you'd expect from Java's `System.currentTimeMillis()`.
@@ -58,18 +55,6 @@ namespace nada::misc {
      * For example get_color_from_ratio(2, 4); gives something roughly in the middle - 0x888800 or so.
      */
     uint32_t get_color_from_ratio(unsigned numerator, unsigned denominator);
-
-    /**
-    * Returns all file paths (relative) from this executable's working directory (relative)
-     * with a given file extension (case sensitive).
-     *
-    * @param folder Path to folder. Relative or absolute.
-    * @param extension e.g. "png", "jpg", "dat", "json" etc. (without '.' before that). Case sensitive.
-    * @note File extension is Case-sensitive.
-    * @note Path is given including `folder`. For example: `folder/file.extension`
-    * @note '/' characters are used as path separators.
-    */
-    std::vector<std::string> all_files(const std::string& folder, std::string extension);
 
     /// Compares via < the objects that are hidden behind their pointers.
     template <typename T>
